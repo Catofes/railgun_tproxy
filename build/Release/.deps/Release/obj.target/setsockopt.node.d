@@ -1,0 +1,1 @@
+cmd_Release/obj.target/setsockopt.node := flock ./Release/linker.lock g++ -shared -pthread -rdynamic -m64  -Wl,-soname=setsockopt.node -o Release/obj.target/setsockopt.node -Wl,--start-group Release/obj.target/setsockopt/src/setsockopt.o -Wl,--end-group 
