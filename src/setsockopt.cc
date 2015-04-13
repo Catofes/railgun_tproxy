@@ -3,7 +3,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <fcntl.h>
-
+#include <errno.h>
 using namespace v8;
 
 void SetSockopt(const FunctionCallbackInfo<Value>& args) 
@@ -25,14 +25,8 @@ void SetSockopt(const FunctionCallbackInfo<Value>& args)
 
 	int sockid = args[0]->NumberValue();
 	int on = 1;
-	if(setsockopt( sockid, SOL_IP, IP_TRANSPARENT, &on, sizeof on)){
-		Local<Number> num = Number::New(isolate, 0);
-		args.GetReturnValue().Set(num);
-	}
-	else{
-		Local<Number> num = Number::New(isolate, 1);
-		args.GetReturnValue().Set(num);
-	}
+	Local<Number> num = Number::New(isolate,setsockopt( sockid, SOL_IP, IP_TRANSPARENT, &on, sizeof on));
+	args.GetReturnValue().Set(num);
 }
 
 void init(Handle<Object> target) {
